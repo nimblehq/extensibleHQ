@@ -4,11 +4,12 @@ import {
 } from './pageDetect';
 
 import prTemplate from './prTemplate';
+import commentToggle from './commentToggle'
 
 function init() {
   document.addEventListener("DOMContentLoaded", function() {
     if(isPullRequest()) {
-      console.log('Pull request page');
+      commentToggle();
     } else if (isCreatePullRequestURL) {
       prTemplate();
     }
