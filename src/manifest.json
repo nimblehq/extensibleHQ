@@ -1,0 +1,7 @@
+{
+  "name": "Extensibl3",
+  "version": "0.1",
+  "description": "Improve Nimbl3 Development Workflow!",
+  "permissions": ["storage"],
+  "manifest_version": 2
+}
