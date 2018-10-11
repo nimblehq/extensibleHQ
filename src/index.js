@@ -1,13 +1,16 @@
 import {
   isPullRequest
 } from './pageDetect'
+import commentToggle from './commentToggle'
 
 function init() {
-  if(isPullRequest()) {
-    console.log('Pull Request page')
-  } else {
-    console.log('Page not detected')
-  }
+  document.addEventListener('DOMContentLoaded',function(){
+    if(isPullRequest()) {
+      commentToggle();
+    } else {
+      console.log('Page not detected')
+    }
+  });
 }
 
 init();
