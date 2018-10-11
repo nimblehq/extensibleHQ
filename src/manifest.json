@@ -3,5 +3,10 @@
   "version": "0.1",
   "description": "Improve Nimbl3 Development Workflow!",
   "permissions": ["storage"],
-  "manifest_version": 2
+  "manifest_version": 2,
+  "icons": {
+    "16": "icons/icon_16.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  }
 }
