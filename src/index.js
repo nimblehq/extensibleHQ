@@ -1,13 +1,18 @@
 import {
-  isPullRequest
-} from './pageDetect'
+  isPullRequest,
+  isCreatePullRequestURL
+} from './pageDetect';
+
+import prTemplate from './prTemplate';
 
 function init() {
-  if(isPullRequest()) {
-    console.log('Pull Request page')
-  } else {
-    console.log('Page not detected')
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    if(isPullRequest()) {
+      console.log('Pull request page');
+    } else if (isCreatePullRequestURL) {
+      prTemplate();
+    }
+  });
 }
 
 init();

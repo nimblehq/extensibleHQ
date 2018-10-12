@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production --config ./config/webpack.js",
-    "watch": "webpack --watch --config ./config/webpack.js"
+    "watch": "webpack --mode development --watch --config ./config/webpack.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "webpack-dev-server": "3.1.9"
   },
   "dependencies": {
-    "onetime": "^2.0.1"
+    "onetime": "^2.0.1",
+    "selector-observer": "^2.1.3"
   }
 }
