@@ -18,3 +18,5 @@ export const isPullRequest = () => /^pull-requests\/\d+/.test(getRepoPath())
 
 export const isCreatePullRequestURL = () =>
   getRepoPath() === 'pull-requests/new'
+  
+export const isPullRequestList = () => getRepoPath() === 'pull-requests'
