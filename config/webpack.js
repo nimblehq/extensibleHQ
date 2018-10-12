@@ -3,7 +3,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  entry: [path.resolve(__dirname, '../src/public/stylesheets/index.scss')],
+  entry: [path.resolve(__dirname, '../src/index.js'), path.resolve(__dirname, '../src/public/stylesheets/index.scss')],
   output: {
     path: path.resolve(__dirname, '../src/build'),
     filename: 'index.js'
