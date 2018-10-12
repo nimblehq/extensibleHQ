@@ -16,5 +16,8 @@
       "css": ["build/index.css"],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "browser_action": {
+    "default_popup": "index.html"
+  }
 }
