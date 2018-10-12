@@ -12,6 +12,8 @@ function init() {
       commentToggle();
     } else if (isCreatePullRequestURL) {
       prTemplate();
+    } else {
+      console.log('Page not detected')
     }
   });
 }
