@@ -5,14 +5,15 @@ export default () => {
   observe('tbody', {
     add(table) {
       console.log('active');
-      const order = ["141", "149", "137"]
+      const databaseOrder = localStorage.getItem('prOrder').split(",");
 
       let items = [].slice.call(table.children);
+
       while (table.firstChild) {
         table.removeChild(table.firstChild);
       }
 
-      order.forEach((id) => {
+      databaseOrder.forEach((id) => {
         const node = items.find((item) => {
           return item.attributes['data-pull-request-id'].value === id
         })
@@ -20,31 +21,35 @@ export default () => {
       });
 
       let notInDatabase = items.filter((item) => {
-        return !order.includes(item.attributes['data-pull-request-id'].value)
+        return !databaseOrder.includes(item.attributes['data-pull-request-id'].value)
       })
-
-      console.log(notInDatabase);
 
       notInDatabase.sort(function(a,b) { 
         return a.attributes['data-pull-request-id'].value - b.attributes['data-pull-request-id'].value 
       });
+
+      let order = [].slice.call(table.children).map((item) => {
+        return item.attributes['data-pull-request-id'].value
+      });
+      console.log(order);
       
       notInDatabase.forEach(function(item) {
         table.append(item);
       })
 
+
       const sortable = new Sortable(table, {
         draggable: '.pull-request-row'
       })
 
-      sortable.on('sortable:start', (evt) => {
-        console.log('sortable:start');
-        console.log(evt);
-      });
+      const move = function (array, from, to) {
+        array.splice(to, 0, array.splice(from, 1)[0]);
+      };
 
-      sortable.on('sortable:stop', (evt) => {
-        console.log('sortable:stop');
-        console.log(evt);
+      sortable.on('sortable:stop', ({oldIndex, newIndex}) => {
+        move(order, oldIndex, newIndex)
+        console.log(order);
+        localStorage.setItem('prOrder', order)
       });
     
     },
