@@ -1,0 +1,71 @@
+*,
+*::before,
+*::after {
+  border-color: #293243 !important;
+}
+
+#pullrequest-diff {
+  .lines-added {
+    background: #1E541E;
+    color: #64AD64;
+  }
+ 
+  .lines-removed {
+    background: #671518;
+    color: #CA7376;
+  }
+}
+
+.diff-container {
+  .heading {
+    .aui-lozenge-complete {
+      background: #0D1117 !important;
+      border-color: #505F79 !important;
+      color: #505F79 !important;
+    }
+  }
+
+  .refract-container {
+    background: #0D1117 !important;
+  
+    .addition pre.source {
+      background: #152E15 !important;
+    }
+
+    .addition pre.source ins {
+      background: #1E541E !important;
+    }
+  
+    .deletion pre.source {
+      background: #350E10 !important;
+    }
+
+    .deletion pre.source ins {
+      background: #671518 !important;
+    }
+  }
+
+  .refract-content-container {
+    .ellipsis {
+      box-shadow: none !important;
+    }
+
+    .skipped-container::after {
+      background: #0D1117 !important;
+    }
+
+    .skipped-middle::before {
+      background: #0D1117 !important;
+    }
+
+    .skipped-top::before {
+      background: #0D1117 !important;
+    }
+  }
+}
+
+button {
+  &.aui-button {
+    background: #292F3D !important;
+  }
+}
