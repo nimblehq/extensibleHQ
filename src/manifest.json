@@ -13,6 +13,7 @@
     {
       "matches": [ "https://bitbucket.org/*"],
       "js": ["build/index.js"],
+      "css": ["build/index.css"],
       "run_at": "document_start"
     }
   ]
