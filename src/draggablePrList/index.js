@@ -3,6 +3,10 @@ import { Sortable } from '@shopify/draggable';
 import firebase from 'firebase/app';
 import 'firebase/database';
 
+const CLASS_NAMES = {
+  loadingText: 'pr-loading-text'
+}
+
 const repositoryName = () => {
   return JSON.parse(document.querySelector('body').getAttribute('data-current-repo')).slug;
 }
@@ -32,11 +36,13 @@ const addMissingElementToArray = (arrayBig, arraySmall) => {
   return [...arraySmall, ...missingElements]
 }
 
-const reorderPrList = (table, prListElements, order) => {
+const removePrList = (table) => {
   while (table.firstChild) {
     table.removeChild(table.firstChild);
   }
+}
 
+const addPrList = (table, prListElements, order) => {
   order.forEach((id) => {
     const node = prListElements.find((prElement) => {
       return prElement.attributes['data-pull-request-id'].value === id
@@ -63,11 +69,13 @@ export default () => {
       const bitBucketOrder = prListElements.map(prElement => {
         return prElement.attributes['data-pull-request-id'].value
       });
-      const databaseOrder = await getDatabaseOrder();
 
+      removePrList(table);
+
+      const databaseOrder = await getDatabaseOrder();
       const order = addMissingElementToArray(bitBucketOrder, databaseOrder);
 
-      reorderPrList(table, prListElements, order);
+      addPrList(table, prListElements, order);
       initializeSortable(table, order);
     },
   })
