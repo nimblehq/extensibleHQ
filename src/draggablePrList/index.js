@@ -1,14 +1,23 @@
 import { observe } from 'selector-observer'
 import { Sortable } from '@shopify/draggable';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
-const getDatabaseOrder = () => {
-  const order = localStorage.getItem('prOrder');
+const repositoryName = () => {
+  return JSON.parse(document.querySelector('body').getAttribute('data-current-repo')).slug;
+}
 
-  return order === null ? [] : order.split(",");
+const getDatabaseOrder = async () => {
+  const snapshot = await firebase.database().ref(`${repositoryName()}/prOrder`).once('value');
+  const order = snapshot.val();
+
+  return order === null ? [] : order;
 }
 
 const setDatabaseOrder = (order) => {
-  localStorage.setItem('prOrder', order);
+  firebase.database().ref(repositoryName()).set({
+    prOrder: order
+  });
 }
 
 const shiftElementArray = (array, from, to) => {
@@ -49,12 +58,12 @@ const initializeSortable = (table, order) => {
 
 export default () => {
   observe('tbody', {
-    add(table) {
-      const databaseOrder = getDatabaseOrder();
+    add: async (table) => {
       const prListElements = [].slice.call(table.children);
       const bitBucketOrder = prListElements.map(prElement => {
         return prElement.attributes['data-pull-request-id'].value
       });
+      const databaseOrder = await getDatabaseOrder();
 
       const order = addMissingElementToArray(bitBucketOrder, databaseOrder);
 
