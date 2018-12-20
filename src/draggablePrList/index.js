@@ -74,10 +74,6 @@ export default () => {
       const databaseOrder = await getDatabaseOrder();
       const order = addMissingElementToArray(bitBucketOrder, databaseOrder);
 
-      console.log('bitBucketOrder ', bitBucketOrder);
-      console.log('databaseOrder ', databaseOrder);
-      console.log('order', order);
-
       addPrList(table, prListElements, order);
       initializeSortable(table, order);
     },
