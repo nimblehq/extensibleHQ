@@ -1,7 +1,7 @@
 {
-  "name": "Extensibl3",
-  "version": "0.2",
-  "description": "Improve Nimbl3 Development Workflow!",
+  "name": "ExtensibleHQ",
+  "version": "0.2.1",
+  "description": "Improve Nimble Development Workflow!",
   "permissions": ["storage"],
   "manifest_version": 2,
   "icons": {
