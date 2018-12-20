@@ -43,7 +43,10 @@ const addPrList = (table, prListElements, order) => {
     const node = prListElements.find((prElement) => {
       return prElement.attributes['data-pull-request-id'].value === id
     })
-    table.append(node);
+
+    if (node !== undefined) {
+      table.append(node)
+    }
   });
 }
 
@@ -70,6 +73,10 @@ export default () => {
 
       const databaseOrder = await getDatabaseOrder();
       const order = addMissingElementToArray(bitBucketOrder, databaseOrder);
+
+      console.log('bitBucketOrder ', bitBucketOrder);
+      console.log('databaseOrder ', databaseOrder);
+      console.log('order', order);
 
       addPrList(table, prListElements, order);
       initializeSortable(table, order);
