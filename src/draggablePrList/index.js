@@ -3,10 +3,6 @@ import { Sortable } from '@shopify/draggable';
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-const CLASS_NAMES = {
-  loadingText: 'pr-loading-text'
-}
-
 const repositoryName = () => {
   return JSON.parse(document.querySelector('body').getAttribute('data-current-repo')).slug;
 }
