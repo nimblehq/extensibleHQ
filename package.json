@@ -4,7 +4,6 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production --config ./config/webpack.js",
     "watch": "webpack --mode development --watch --config ./config/webpack.js"
   },
@@ -39,6 +38,7 @@
   },
   "dependencies": {
     "@shopify/draggable": "^1.0.0-beta.8",
+    "firebase": "^5.7.0",
     "onetime": "^2.0.1",
     "selector-observer": "^2.1.3"
   }
