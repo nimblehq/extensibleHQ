@@ -1,6 +1,6 @@
 {
   "name": "ExtensibleHQ",
-  "version": "0.3",
+  "version": "0.3.1",
   "description": "Improve Nimble development workflow",
   "permissions": ["storage", "*://*.pivotaltracker.com/*"],
   "manifest_version": 2,
