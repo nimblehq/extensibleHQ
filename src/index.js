@@ -10,6 +10,7 @@ import diffToggle from './diffToggle';
 import darkMode from './darkMode';
 import draggablePrList from './draggablePrList';
 import taggablePr from './taggablePr';
+import tagToggle from './tagToggle';
 import firebase from 'firebase/app';
 
 const firebaseConfig = {
@@ -25,6 +26,7 @@ function init() {
   document.addEventListener("DOMContentLoaded", function() {
     firebase.initializeApp(firebaseConfig);
     if (isPullRequest()) {
+      tagToggle();
       commentToggle();
       diffToggle();
       darkMode();

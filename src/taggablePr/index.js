@@ -3,9 +3,36 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 
 const PIVOTAL_API_KEY = '2ae5a979b9cacdd7a60c6d319d3fe0d7';
+const TAG_TYPE = {
+  info: {
+    tagClass: 'label-tag--info'
+  },
+  warning: {
+    tagClass: 'label-tag--warning'
+  }
+}
 
 const repositoryName = () => {
   return JSON.parse(document.querySelector('body').getAttribute('data-current-repo')).slug;
+}
+
+const appendReleaseTag = (node, value) => {
+  const label = document.createElement('div');
+  label.classList.add('label-tag');
+  const labelText = document.createTextNode(value);
+
+  label.append(labelText);
+  node.closest('.title').append(label);
+}
+
+const appendStatusTag = (node, statusTag) => {
+  const label = document.createElement('div');
+  label.classList.add('label-tag');
+  label.classList.add(TAG_TYPE[statusTag.type].tagClass);
+  const labelText = document.createTextNode(statusTag.text);
+
+  label.append(labelText);
+  node.closest('.title').append(label);
 }
 
 export default () => {
@@ -42,9 +69,14 @@ export default () => {
     if (!!story) {
       story.labels.map((label) => {
         if (!!label.name.match(/\@/)) {
-          prLabels.push({
+            prLabels.push({
+                id: story.id,
+                value: label.name.split('@')[1]
+              });
+          } else {
+            prLabels.push({
               id: story.id,
-              value: label.name.split('@')[1]
+              value: null
             });
           }
         })
@@ -52,20 +84,27 @@ export default () => {
     })
   }
 
+  const getPrStatusTags = async () => {
+    const prStatusTags = await firebase.database().ref(`${repositoryName()}/prTags`).once('value');
+    return prStatusTags.val();
+  }
+
   const tagPrRelease = async () => {
     await getPrRelease();
+    const prStatusTags = await getPrStatusTags();
 
     prIds.map((id) => {
       prLabels.map((prLabel) => {
         if (prLabel.id == id.id) {
-          const label = document.createElement('div');
-          label.classList.add('label-tag');
-          const labelText = document.createTextNode(prLabel.value);
-      
-          label.append(labelText);
-          id.node.closest('.title').append(label);
+          if (!!prLabel.value) {
+            appendReleaseTag(id.node, prLabel.value);
+          }
         }
       })
+      
+      if (!!prStatusTags[id.id]) {
+        appendStatusTag(id.node, prStatusTags[id.id]);
+      }
     })
   }
   
