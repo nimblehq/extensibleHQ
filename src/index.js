@@ -2,14 +2,15 @@ import {
   isPullRequest,
   isCreatePullRequestURL,
   isPullRequestList
-} from './pageDetect';
+} from "./pageDetect";
 
-import prTemplate from './prTemplate';
-import commentToggle from './commentToggle'
-import darkMode from './darkMode'
-import draggablePrList from './draggablePrList';
-import taggablePr from './taggablePr';
-import firebase from 'firebase/app';
+import prTemplate from "./prTemplate";
+import commentToggle from "./commentToggle";
+import diffToggle from "./diffToggle";
+import darkMode from "./darkMode";
+import draggablePrList from "./draggablePrList";
+import taggablePr from "./taggablePr";
+import firebase from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCaC1_ko4Pc21ZWbncVw2oVzTU9GWPkNTA",
@@ -21,10 +22,11 @@ const firebaseConfig = {
 };
 
 function init() {
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     firebase.initializeApp(firebaseConfig);
     if (isPullRequest()) {
       commentToggle();
+      diffToggle();
       darkMode();
     } else if (isCreatePullRequestURL()) {
       prTemplate();
