@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@shopify/draggable": "^1.0.0-beta.8",
+    "axios": "^0.18.0",
     "firebase": "^5.7.0",
     "onetime": "^2.0.1",
     "selector-observer": "^2.1.3"
