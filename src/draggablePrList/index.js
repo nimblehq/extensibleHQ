@@ -15,9 +15,7 @@ const getDatabaseOrder = async () => {
 }
 
 const setDatabaseOrder = (order) => {
-  firebase.database().ref(repositoryName()).set({
-    prOrder: order
-  });
+  firebase.database().ref(`${repositoryName()}/prOrder`).set(order);
 }
 
 const shiftElementArray = (array, from, to) => {
