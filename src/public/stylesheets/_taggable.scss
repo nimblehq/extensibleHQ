@@ -12,10 +12,14 @@
   }
 
   &--info {
-    background: #f39300;
+    background: #629200;
   }
 
   &--warning {
+    background: #f39300;
+  }
+
+  &--danger {
     background: #a71f39;
   }
 }

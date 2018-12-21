@@ -5,12 +5,7 @@ const repositoryName = () => {
   return JSON.parse(document.querySelector('body').getAttribute('data-current-repo')).slug;
 }
 
-const getPrTags = async () => {
-  const prTags = await firebase.database().ref(`${repositoryName()}/prTags`).once('value');
-  return prTags.val();
-}
-
-const tagOptions = [{text: 'None'},{type: 'info', text: 'WIP'}, {type: 'warning', text: 'Need Review'}];
+const tagOptions = [{text: 'None'},{type: 'info', text: 'Revisit'},{type: 'warning', text: 'WIP'},{type: 'info', text: 'Ready for review'},{type: 'danger', text: 'Need to fix'}];
 
 const savePrTag = async (selectNode, pivotalTrackerId) => {
   if (selectNode.value !== 'None') {

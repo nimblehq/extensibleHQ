@@ -9,6 +9,9 @@ const TAG_TYPE = {
   },
   warning: {
     tagClass: 'label-tag--warning'
+  },
+  danger: {
+    tagClass: 'label-tag--danger'
   }
 }
 
