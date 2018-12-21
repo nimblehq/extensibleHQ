@@ -9,7 +9,7 @@ import commentToggle from './commentToggle'
 import darkMode from './darkMode'
 import draggablePrList from './draggablePrList';
 import taggablePr from './taggablePr';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCaC1_ko4Pc21ZWbncVw2oVzTU9GWPkNTA",
@@ -21,8 +21,9 @@ const firebaseConfig = {
 };
 
 function init() {
-  document.addEventListener("DOMContentLoaded", function() {
-    if(isPullRequest()) {
+  document.addEventListener("DOMContentLoaded", function () {
+    firebase.initializeApp(firebaseConfig);
+    if (isPullRequest()) {
       commentToggle();
       darkMode();
     } else if (isCreatePullRequestURL()) {
@@ -35,8 +36,3 @@ function init() {
 }
 
 init();
-firebase.initializeApp(firebaseConfig);
-firebase.database().ref('message/').set({
-  message: 'Hello Pong Again',
-  story_ids: [1,2,3,4,5]
-});

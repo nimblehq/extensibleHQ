@@ -1,57 +1,81 @@
 import { observe } from 'selector-observer'
 import { Sortable } from '@shopify/draggable';
+import firebase from 'firebase/app';
+import 'firebase/database';
+
+const repositoryName = () => {
+  return JSON.parse(document.querySelector('body').getAttribute('data-current-repo')).slug;
+}
+
+const getDatabaseOrder = async () => {
+  const snapshot = await firebase.database().ref(`${repositoryName()}/prOrder`).once('value');
+  const order = snapshot.val();
+
+  return order === null ? [] : order;
+}
+
+const setDatabaseOrder = (order) => {
+  firebase.database().ref(repositoryName()).set({
+    prOrder: order
+  });
+}
+
+const shiftElementArray = (array, from, to) => {
+  array.splice(to, 0, array.splice(from, 1)[0]);
+};
+
+const addMissingElementToArray = (arrayBig, arraySmall) => {
+  const missingElements = arrayBig.filter((element) => {
+    return !arraySmall.includes(element)
+  })
+
+  return [...arraySmall, ...missingElements]
+}
+
+const removePrList = (table) => {
+  while (table.firstChild) {
+    table.removeChild(table.firstChild);
+  }
+}
+
+const addPrList = (table, prListElements, order) => {
+  order.forEach((id) => {
+    const node = prListElements.find((prElement) => {
+      return prElement.attributes['data-pull-request-id'].value === id
+    })
+
+    if (node !== undefined) {
+      table.append(node)
+    }
+  });
+}
+
+const initializeSortable = (table, order) => {
+  const sortable = new Sortable(table, {
+    draggable: '.pull-request-row'
+  })
+
+  sortable.on('sortable:stop', ({ oldIndex, newIndex }) => {
+    shiftElementArray(order, oldIndex, newIndex)
+    setDatabaseOrder(order);
+  });
+}
 
 export default () => {
   observe('tbody', {
-    add(table) {
-      console.log('active');
-      const databaseOrder = localStorage.getItem('prOrder').split(",");
-
-      let items = [].slice.call(table.children);
-
-      while (table.firstChild) {
-        table.removeChild(table.firstChild);
-      }
-
-      databaseOrder.forEach((id) => {
-        const node = items.find((item) => {
-          return item.attributes['data-pull-request-id'].value === id
-        })
-        table.append(node);
+    add: async (table) => {
+      const prListElements = [].slice.call(table.children);
+      const bitBucketOrder = prListElements.map(prElement => {
+        return prElement.attributes['data-pull-request-id'].value
       });
 
-      let notInDatabase = items.filter((item) => {
-        return !databaseOrder.includes(item.attributes['data-pull-request-id'].value)
-      })
+      removePrList(table);
 
-      notInDatabase.sort(function(a,b) { 
-        return a.attributes['data-pull-request-id'].value - b.attributes['data-pull-request-id'].value 
-      });
+      const databaseOrder = await getDatabaseOrder();
+      const order = addMissingElementToArray(bitBucketOrder, databaseOrder);
 
-      let order = [].slice.call(table.children).map((item) => {
-        return item.attributes['data-pull-request-id'].value
-      });
-      console.log(order);
-      
-      notInDatabase.forEach(function(item) {
-        table.append(item);
-      })
-
-
-      const sortable = new Sortable(table, {
-        draggable: '.pull-request-row'
-      })
-
-      const move = function (array, from, to) {
-        array.splice(to, 0, array.splice(from, 1)[0]);
-      };
-
-      sortable.on('sortable:stop', ({oldIndex, newIndex}) => {
-        move(order, oldIndex, newIndex)
-        console.log(order);
-        localStorage.setItem('prOrder', order)
-      });
-    
+      addPrList(table, prListElements, order);
+      initializeSortable(table, order);
     },
   })
 }
