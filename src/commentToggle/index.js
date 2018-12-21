@@ -23,7 +23,7 @@ export default () => {
       commentToggleButton.className = ('btn-comment-toggle execute click aui-button aui-button-light sbs');
       element.prepend(commentToggleButton);
       const fileDiffContainer = element.closest('.diff-container');
-      element.addEventListener('click', () => toggleCommentDisplay(fileDiffContainer, commentToggleButton));
+      commentToggleButton.addEventListener('click', () => toggleCommentDisplay(fileDiffContainer, commentToggleButton));
     }
   })
 }
