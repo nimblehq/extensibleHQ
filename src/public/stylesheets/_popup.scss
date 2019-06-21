@@ -1,0 +1,47 @@
+$theme-colors: (
+  'primary': #e20041,
+);
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+html {
+  font-size: 12px;
+}
+
+.popup {
+  width: 300px;
+  .popup-header {
+    position: relative;
+    z-index: 5;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0px 0px 10px 0px rgba(140, 140, 140, 1);
+
+    &__logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    &__title {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    &__config-icon {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+  }
+
+  .popup-content {
+    padding: 10px;
+    background-color: #f0f0f0;
+
+    &__configuration {
+      margin-top: 15px;
+    }
+  }
+}

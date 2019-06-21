@@ -1,6 +1,13 @@
 .btn-comment-toggle {
   &--hide {
-    background-color: #0065FF !important;
-    color: #FFFFFF !important;
+    background-color: #0065ff !important;
+    color: #ffffff !important;
+  }
+
+  .temp {
+    height: 32px;
+    background: #f4f5f7;
+    border: none;
+    color: #707070;
   }
 }
